@@ -1,9 +1,27 @@
-export function apiRoot(): string {
-  const configured = import.meta.env.VITE_API_URL;
-  if (typeof configured !== "string" || configured.trim() === "") {
-    return configured === "" ? "" : "http://127.0.0.1:8000";
+export function resolveApiRoot(configured: string | undefined, dev: boolean): string {
+  const value = typeof configured === "string" ? configured.trim() : "";
+  const explicit = value.replace("://localhost", "://127.0.0.1").replace(/\/$/, "");
+  if (explicit && (dev || !isLoopback(explicit))) return explicit;
+  return dev ? "http://127.0.0.1:8000" : "";
+}
+
+function isLoopback(url: string): boolean {
+  try {
+    const host = new URL(url).hostname;
+    return host === "localhost" || host === "127.0.0.1";
+  } catch {
+    return false;
   }
-  return configured.trim().replace("://localhost", "://127.0.0.1").replace(/\/$/, "");
+}
+
+export function apiRoot(): string {
+  return resolveApiRoot(import.meta.env.VITE_API_URL, import.meta.env.DEV);
+}
+
+function unreachable(): string {
+  return import.meta.env.DEV
+    ? "The library API did not respond. Start it on port 8000, then try again."
+    : "The library API did not respond. Try again.";
 }
 
 export class ApiError extends Error {
@@ -35,7 +53,7 @@ async function request(path: string, token: string, method: string, body?: unkno
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch {
-    throw new ApiError("The library API did not respond. Start it on port 8000, then try again.");
+    throw new ApiError(unreachable());
   }
   if (!response.ok) {
     const payload = await response.json().catch(() => null);
@@ -53,7 +71,7 @@ export async function apiPublic<T>(path: string, body: unknown): Promise<T> {
       body: JSON.stringify(body),
     });
   } catch {
-    throw new ApiError("The library API did not respond. Start it on port 8000, then try again.");
+    throw new ApiError(unreachable());
   }
   if (!response.ok) {
     const payload = await response.json().catch(() => null);
@@ -74,11 +92,16 @@ export async function apiSend<T = void>(path: string, token: string, method: str
 }
 
 export async function apiUpload<T>(path: string, token: string, form: FormData): Promise<T> {
-  const response = await fetch(`${apiRoot()}${path}`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body: form,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${apiRoot()}${path}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    });
+  } catch {
+    throw new ApiError(unreachable());
+  }
   if (!response.ok) {
     const payload = await response.json().catch(() => null);
     throw new ApiError(messageFrom(payload), response.status);
