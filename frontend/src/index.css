@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-sans: "Outfit", "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  --color-paper: #f3eee4;
+  --color-paper-raised: #fbf8f2;
+  --color-ink: #1a1714;
+  --color-ink-soft: #5e584f;
+  --color-binding: #4a2c2a;
+  --color-binding-deep: #2c1b1a;
+  --color-brass: #8c6a3d;
+  --color-brass-soft: #c4a574;
+  --color-rule: #e3d9cc;
+  --color-available: #2f5d50;
+  --color-danger: #8c3a3a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #e3d9cc;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #8c6a3d;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+::selection {
+  background: #e7d3b0;
+  color: #1a1714;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+}
+
+@keyframes book-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.72) translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.book-pop {
+  animation: book-pop 280ms cubic-bezier(0.16, 0.84, 0.3, 1.15);
+}
+
+.shelf-scroll {
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.shelf-scroll::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+.desk-scroll {
+  scrollbar-width: none;
+}
+
+.desk-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+.shelf-book {
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateY(-28deg);
+  transform-origin: left bottom;
+  transition:
+    transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 480ms ease;
+  box-shadow: 5px 10px 14px rgba(26, 23, 20, 0.16);
+}
+
+.book-fore,
+.book-body {
+  --page-edge: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='52' height='113'><rect width='52' height='113' fill='%23d4c4ae'/><rect x='0' y='0.00' width='52.00' height='1.70' fill='%23f7f2e7'/><rect x='5' y='2.25' width='47.00' height='1.98' fill='%23f3eadc'/><rect x='1' y='4.78' width='51.00' height='2.26' fill='%23f8f4ec'/><rect x='8' y='7.59' width='44.00' height='2.54' fill='%23efe4d2'/><rect x='0' y='10.68' width='52.00' height='2.82' fill='%23f5eee4'/><rect x='3' y='14.05' width='49.00' height='1.70' fill='%23e9dcc8'/><rect x='7' y='16.30' width='45.00' height='1.98' fill='%23f7f2e7'/><rect x='1' y='18.83' width='51.00' height='2.26' fill='%23f3eadc'/><rect x='0' y='21.64' width='52.00' height='2.54' fill='%23f8f4ec'/><rect x='9' y='24.73' width='43.00' height='2.82' fill='%23efe4d2'/><rect x='2' y='28.10' width='50.00' height='1.70' fill='%23f5eee4'/><rect x='4' y='30.35' width='48.00' height='1.98' fill='%23e9dcc8'/><rect x='0' y='32.88' width='52.00' height='2.26' fill='%23f7f2e7'/><rect x='5' y='35.69' width='47.00' height='2.54' fill='%23f3eadc'/><rect x='1' y='38.78' width='51.00' height='2.82' fill='%23f8f4ec'/><rect x='8' y='42.15' width='44.00' height='1.70' fill='%23efe4d2'/><rect x='0' y='44.40' width='52.00' height='1.98' fill='%23f5eee4'/><rect x='3' y='46.93' width='49.00' height='2.26' fill='%23e9dcc8'/><rect x='7' y='49.74' width='45.00' height='2.54' fill='%23f7f2e7'/><rect x='1' y='52.83' width='51.00' height='2.82' fill='%23f3eadc'/><rect x='0' y='56.20' width='52.00' height='1.70' fill='%23f8f4ec'/><rect x='9' y='58.45' width='43.00' height='1.98' fill='%23efe4d2'/><rect x='2' y='60.98' width='50.00' height='2.26' fill='%23f5eee4'/><rect x='4' y='63.79' width='48.00' height='2.54' fill='%23e9dcc8'/><rect x='0' y='66.88' width='52.00' height='2.82' fill='%23f7f2e7'/><rect x='5' y='70.25' width='47.00' height='1.70' fill='%23f3eadc'/><rect x='1' y='72.50' width='51.00' height='1.98' fill='%23f8f4ec'/><rect x='8' y='75.03' width='44.00' height='2.26' fill='%23efe4d2'/><rect x='0' y='77.84' width='52.00' height='2.54' fill='%23f5eee4'/><rect x='3' y='80.93' width='49.00' height='2.82' fill='%23e9dcc8'/><rect x='7' y='84.30' width='45.00' height='1.70' fill='%23f7f2e7'/><rect x='1' y='86.55' width='51.00' height='1.98' fill='%23f3eadc'/><rect x='0' y='89.08' width='52.00' height='2.26' fill='%23f8f4ec'/><rect x='9' y='91.89' width='43.00' height='2.54' fill='%23efe4d2'/><rect x='2' y='94.98' width='50.00' height='2.82' fill='%23f5eee4'/><rect x='4' y='98.35' width='48.00' height='1.70' fill='%23e9dcc8'/><rect x='0' y='100.60' width='52.00' height='1.98' fill='%23f7f2e7'/><rect x='5' y='103.13' width='47.00' height='2.26' fill='%23f3eadc'/><rect x='1' y='105.94' width='51.00' height='2.54' fill='%23f8f4ec'/><rect x='8' y='109.03' width='44.00' height='2.82' fill='%23efe4d2'/></svg>");
+  background-color: #f4ecdf;
+  background-image: var(--page-edge);
+  background-repeat: repeat-y;
+  background-size: 100% 113px;
+}
+
+.book-fore {
+  height: 100%;
+  width: 0.375rem;
+  flex-shrink: 0;
+  box-shadow: inset -1px 0 0 rgba(44, 27, 26, 0.14);
+}
+
+.book-body {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  width: 52px;
+  height: calc(100% - 12px);
+  transform-origin: right center;
+  transform: rotateY(-90deg);
+  background-image:
+    linear-gradient(270deg, rgba(44, 27, 26, 0.18), transparent 28%),
+    var(--page-edge);
+  background-size: auto, 100% 113px;
+  background-repeat: no-repeat, repeat-y;
+  box-shadow: inset 0 1px 0 rgba(255, 252, 246, 0.8);
+  pointer-events: none;
+}
+
+.group:hover .shelf-book,
+.group:focus-visible .shelf-book,
+.shelf-book.is-open {
+  transform: perspective(1100px) rotateY(-10deg) translateY(-10px);
+  box-shadow: 10px 18px 20px rgba(26, 23, 20, 0.22);
+}
+
+.shelf-still .shelf-book,
+.shelf-still .group:hover .shelf-book,
+.shelf-still .group:focus-visible .shelf-book,
+.shelf-still .shelf-book.is-open {
+  transform: perspective(1100px) rotateY(-22deg);
+  box-shadow: 5px 10px 14px rgba(26, 23, 20, 0.16);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

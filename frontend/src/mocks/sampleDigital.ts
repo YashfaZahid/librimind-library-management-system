@@ -1,0 +1,46 @@
+import type { DigitalLibrary } from "../domain/digital";
+
+export const sampleDigital: DigitalLibrary = {
+  assets: [
+    {
+      id: "digital-republic",
+      bookId: "republic",
+      scope: "institutional",
+      title: "The Republic",
+      authors: ["Plato"],
+      description: "A preview record for the digital copy. The sample catalogue does not include the PDF.",
+      format: "pdf",
+      fileSize: 2400000,
+      checksum: "",
+      createdOn: "2026-11-01",
+      hasFile: false,
+    },
+    {
+      id: "digital-everyday",
+      bookId: "everyday-things",
+      scope: "institutional",
+      title: "The Design of Everyday Things",
+      authors: ["Don Norman"],
+      description: "A preview record. Sign in to upload a real PDF.",
+      format: "pdf",
+      fileSize: 1800000,
+      checksum: "",
+      createdOn: "2026-11-02",
+      hasFile: false,
+    },
+    {
+      id: "digital-notes",
+      bookId: null,
+      scope: "personal",
+      title: "Studio notes",
+      authors: ["Amina Rahman"],
+      description: "A personal file in the preview collection.",
+      format: "pdf",
+      fileSize: 84000,
+      checksum: "",
+      createdOn: "2026-11-18",
+      hasFile: false,
+    },
+  ],
+  shelf: [{ id: "shelf-notes", bookId: null, assetId: "digital-notes", addedOn: "2026-11-18" }],
+};
