@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # LibriMind
 
 LibriMind is a library for physical copies, a digital collection, and an assistant that has to check its work. The interface is an editorial reading room. The desk uses the same records as the shelves.
@@ -83,6 +82,6 @@ Approved choices that later phases must keep:
 - Chat and embeddings use an OpenAI-compatible API. Semantic search can fall back to scikit-learn TF-IDF when no embedding key is set.
 
 The folder plan, schema, routes, and agents are in [docs/architecture.md](docs/architecture.md). Environment names are in [.env.example](.env.example). No secrets belong in the frontend.
-=======
+
 # librimind-library-management-system
->>>>>>> 8e13c028b06091c842c9679c0c1d3e3708b6ffa0
+ 8e13c028b06091c842c9679c0c1d3e3708b6ffa0
